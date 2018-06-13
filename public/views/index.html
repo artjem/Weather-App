@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Use correct character set. -->
+    <meta charset="utf-8">
+    <!-- Tell IE to use the latest, best version. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>Hello World!</title>
+    <script src="../libs/cesium/Build/Cesium/Cesium.js"></script>
+
+
+    <script src="../js/WeaterhInfo.js"></script>
+    <script src="../js/TimeInfo.js"></script>
+    <script src="../js/LayersSec.js"></script>
+    <style>
+        @import url(../libs/cesium/Build/Cesium/Widgets/widgets.css);
+        html, body, #cesiumContainer {
+            width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden;
+        }
+
+        imgage{
+            opacity:  0.5;
+        }
+    </style>
+</head>
+<body>
+<div id="cesiumContainer"></div>7
+<script>
+    var layers = new Layers( <%- JSON.stringify(Layers) %> ,  <%- JSON.stringify(Key) %>);
+    var mapKey = <%- JSON.stringify(Key) %>;
+
+</script>
+<script>
+
+    var weatherBox = new WeatherInfo();
+    var timeLine = new TimeLine();
+
+    var worldTerrain = Cesium.createWorldTerrain({
+        requestVertexNormals: true
+    });
+
+    var viewer = new Cesium.Viewer('cesiumContainer', {
+        timeline: false,
+        animation: false,
+        homeButton: false,
+        screenModePicker: false,
+        navigationHelpButton: false,
+        clock: timeLine.clock,
+        baseLayerPicker: false,
+        geocoder: false,
+        sceneMode: Cesium.SceneMode.SCENE3D,
+        terrainProvider: worldTerrain,
+        orderIndependentTranslucency: false,
+        imageryProvider : new Cesium.createOpenStreetMapImageryProvider({
+            url : 'http://a.tile.thunderforest.com/landscape/',
+            fileExtension: 'png?apikey='+mapKey.MAP_APPKEY
+        }),
+    } );
+
+    viewer.scene.globe.depthTestAgainstTerrain = true;
+    viewer.scene.globe.enableLighting = true;
+    layers.addLayersToView();
+
+
+    //click event
+    var nombre = 0;
+
+    viewer.scene.canvas.addEventListener('click', function(e) {
+
+        weatherBox.appendData(e.clientX, e.clientY);
+    }, false);
+
+
+
+
+</script>
+</body>
+</html>

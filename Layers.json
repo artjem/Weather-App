@@ -1,0 +1,19 @@
+[
+  {
+  "OWM_APPKEY" : "893d40caf118c95d25618e31ae9d8da8",
+  "MAP_APPKEY" : "fcb928624f074c28b1ad5f066a97317a"
+}
+,
+{
+  "clouds": {
+    "url":  "https://tile.openweathermap.org/map/clouds"
+  },
+  "rain" : {
+    "url" : "https://tile.openweathermap.org/map/rain"
+  },
+  "precipitation" : {
+    "url" :  "https://tile.openweathermap.org/map/precipitation"
+  }
+
+}
+]
